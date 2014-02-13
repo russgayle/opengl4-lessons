@@ -7,6 +7,7 @@
 
 // Standard.
 #include <iostream>
+#include <fstream>
 
 int main(int argc, char* argv[]) {
 
@@ -67,29 +68,51 @@ int main(int argc, char* argv[]) {
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-  // Vertex shader (hard-coded)
-  const char* vertex_shader =
-    "#version 400\n"
-    "in vec3 vp;"
-    "void main() {"
-    "  gl_Position = vec4(vp, 1.0);"
-    "}";
+  // Load vertex shader
+  std::ifstream vsFile;
+  std::string vsLines;
 
-  // Fragment shader (hard-coded)
-  const char* fragment_shader =
-    "#version 400\n"
-    "out vec4 frag_color;"
-    "void main() {"
-    "  frag_color = vec4(0.5, 0.0, 0.5, 1.0);"
-    "}";
+  vsFile.open("vs.glsl");
+  if (!vsFile.is_open()) {
+    std::cerr << "Could not open vs.glsl" << std::endl;
+  } else {
+    std::string line;
+    while(getline(vsFile, line)) {
+      vsLines += line + "\n";
+    }
+    vsFile.close();
+  }
+  const char* vsSource = vsLines.c_str();
+
+  //std::cout << "Vertex Shader:" << std::endl;
+  //std::cout << vsSource << std::endl;
+
+  // Load fragment shader
+  std::ifstream fsFile;
+  std::string fsLines;
+
+  fsFile.open("fs.glsl");
+  if (!fsFile.is_open()) {
+    std::cerr << "Could not open fs.glsl" << std::endl;
+  } else {
+    std::string line;
+    while(getline(fsFile, line)) {
+      fsLines += line + "\n";
+    }
+    fsFile.close();
+  }
+  const char* fsSource = fsLines.c_str();
+
+  //std::cout << "Fragment Shader:" << std::endl;
+  //std::cout << fsSource << std::endl; 
 
   // Compile shaders
   unsigned int vs = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vs, 1, &vertex_shader, NULL);
+  glShaderSource(vs, 1, &vsSource, NULL);
   glCompileShader(vs);
 
   unsigned int fs = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fs, 1, &fragment_shader, NULL);
+  glShaderSource(fs, 1, &fsSource, NULL);
   glCompileShader(fs);
 
   // Attach shaders to our program
@@ -116,8 +139,6 @@ int main(int argc, char* argv[]) {
     // Put it on the screen
     glfwSwapBuffers(window);
   }
-
-
 
   glfwTerminate();
   return 0;
