@@ -5,16 +5,37 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+// Google stack
+#include <gflags/gflags.h>
+#include <glog/logging.h>
+
 // Standard.
 #include <iostream>
 #include <fstream>
 
+void error_callback(int error, const char* description) {
+  LOG(ERROR) << "[GLFW ERROR " << error << "] " << description; 
+}
+
 int main(int argc, char* argv[]) {
+  
+  // Init google stack
+  google::SetVersionString("0.0.2");
+  google::ParseCommandLineFlags(&argc, &argv, true);
+
+  // Init logging
+  FLAGS_log_link = ".";
+  FLAGS_alsologtostderr = true;
+  FLAGS_colorlogtostderr = true;
+  google::InitGoogleLogging(argv[0]);
+
+  // Set up error handling for GLFW
+  LOG(INFO) << "Starting GLFW... ";
+  glfwSetErrorCallback(error_callback);
 
   // Start GL context (using GLFW)
   if (!glfwInit()) {
-    std::cerr << "Error: Problem starting GLFW3" << std::endl;
-    return 1;
+    LOG(FATAL) << "Fatal: Could not start GLFW3";
   }
   
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -24,9 +45,8 @@ int main(int argc, char* argv[]) {
 
   GLFWwindow* window = glfwCreateWindow(640, 480, "Hello, Triangle!", NULL, NULL);
   if (!window) {
-    std::cerr << "Error: Could not open window with GLFW3" << std::endl;
     glfwTerminate();
-    return 1;
+    LOG(FATAL) << "Fatal: Could not open window with GLFW3" << std::endl;
   }
 
   glfwMakeContextCurrent(window);
@@ -38,8 +58,8 @@ int main(int argc, char* argv[]) {
   // Fun. 
   const GLubyte* renderer = glGetString(GL_RENDERER);
   const GLubyte* version = glGetString(GL_VERSION);
-  std::cout << "Renderer: " << renderer << std::endl;
-  std::cout << "OpenGL version supported: " << version << std::endl;
+  LOG(INFO) << "Renderer: " << renderer;
+  LOG(INFO) << "OpenGL version supported: " << version;
 
   // Setup OpenGL
   glEnable(GL_DEPTH_TEST);
@@ -96,7 +116,7 @@ int main(int argc, char* argv[]) {
   std::string vsLines;
   vsFile.open("vs.glsl");
   if (!vsFile.is_open()) {
-    std::cerr << "Could not open vs.glsl" << std::endl;
+    LOG(FATAL) << "Fatal: Could not open vs.glsl";
   } else {
     std::string line;
     while(getline(vsFile, line)) {
@@ -110,7 +130,7 @@ int main(int argc, char* argv[]) {
   std::string vs2Lines;
   vsFile.open("vs2.glsl");
   if (!vsFile.is_open()) {
-    std::cerr << "Could not open vs2.glsl" << std::endl;
+    LOG(FATAL) << "Fatal: Could not open vs2.glsl";
   } else {
     std::string line;
     while (getline(vsFile, line)) {
@@ -128,7 +148,7 @@ int main(int argc, char* argv[]) {
   std::string fsLines;
   fsFile.open("fs.glsl");
   if (!fsFile.is_open()) {
-    std::cerr << "Could not open fs.glsl" << std::endl;
+    LOG(FATAL) << "Fatal: Could not open fs.glsl";
   } else {
     std::string line;
     while(getline(fsFile, line)) {
@@ -141,7 +161,7 @@ int main(int argc, char* argv[]) {
   std::string fs2Lines;
   fsFile.open("fs2.glsl");
   if (!fsFile.is_open()) {
-    std::cerr << "Could not open fs2.glsl" << std::endl;
+    LOG(FATAL) << "Fatal: Could not open fs2.glsl";
   } else {
     std::string line;
     while(getline(fsFile, line)) {
