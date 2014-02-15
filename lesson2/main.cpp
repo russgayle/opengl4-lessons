@@ -28,6 +28,22 @@ void window_callback(GLFWwindow* window, int p_width, int p_height) {
   // Ordinarily, update perspective matrices here.
 }
 
+void updateFPSCounter(GLFWwindow* window) {
+  static double previous = glfwGetTime();
+  static int frame_count;
+  double current = glfwGetTime();
+  double elapsed = current - previous;
+  if (elapsed > 0.25) {
+    previous = current;
+    double fps = (double)frame_count / elapsed;
+    std::ostringstream oss;
+    oss << "Lesson2: " << fps << " fps";
+    glfwSetWindowTitle(window, oss.str().c_str());
+    frame_count = 0;
+  }
+  frame_count++;
+}
+
 int main(int argc, char* argv[]) {
   
   // Init google stack
