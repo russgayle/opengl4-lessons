@@ -13,8 +13,19 @@
 #include <iostream>
 #include <fstream>
 
+// Globals
+int width = 640;
+int height = 480;
+
 void error_callback(int error, const char* description) {
   LOG(ERROR) << "[GLFW ERROR " << error << "] " << description; 
+}
+
+void window_callback(GLFWwindow* window, int p_width, int p_height) {
+  width = p_width;
+  height = p_height;
+  
+  // Ordinarily, update perspective matrices here.
 }
 
 int main(int argc, char* argv[]) {
@@ -38,16 +49,22 @@ int main(int argc, char* argv[]) {
     LOG(FATAL) << "Fatal: Could not start GLFW3";
   }
   
+  // Mac hints
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  GLFWwindow* window = glfwCreateWindow(640, 480, "Hello, Triangle!", NULL, NULL);
+  // GLFW setup
+  glfwWindowHint(GLFW_SAMPLES, 4); // anti-aliasing
+
+  // Start full screen
+  GLFWwindow* window = glfwCreateWindow(width, height, "OpenGL4: Lesson 2", NULL, NULL);
   if (!window) {
     glfwTerminate();
     LOG(FATAL) << "Fatal: Could not open window with GLFW3" << std::endl;
   }
+  glfwSetWindowSizeCallback(window, window_callback); 
 
   glfwMakeContextCurrent(window);
 
@@ -206,8 +223,11 @@ int main(int argc, char* argv[]) {
 
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
+    updateFPSCounter(window);
+
     // Clear
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, width, height);
 
     // Shape 1
     glUseProgram(shader_program);
@@ -219,11 +239,16 @@ int main(int argc, char* argv[]) {
     glBindVertexArray(vao2);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     
+    // Put it on the screen!
+    glfwSwapBuffers(window);
+
     // Poll for input handling
     glfwPollEvents();
 
-    // Put it on the screen
-    glfwSwapBuffers(window);
+    // Check for escape-key press to close window
+    if(GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
+      glfwSetWindowShouldClose(window, 1);
+    }
   }
 
   glfwTerminate();
