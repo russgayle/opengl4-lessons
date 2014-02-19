@@ -1,6 +1,6 @@
 #include "common.h"
 
-void queso::init(int argc, char* argv[]) {
+GLFWwindow* queso::init(int argc, char* argv[]) {
   // Init google flags
   google::SetVersionString("0.0.3");
   google::ParseCommandLineFlags(&argc, &argv, true);
@@ -29,17 +29,27 @@ void queso::init(int argc, char* argv[]) {
   // Preferences
   glfwWindowHint(GLFW_SAMPLES, 4); // anti-aliasing
 
-  //// GLEW
-  //LOG(INFO) << "Starting GLEW.. ";
-  //glewExperimental = GL_TRUE;
-  //glewInit();
-  //LOG(INFO) << "... done!";
+  // Go ahead and make a window
+  GLFWwindow* window = glfwCreateWindow(640, 480, "Lesson 3. Queso style", NULL, NULL);
+  if (!window) {
+    glfwTerminate();
+    LOG(FATAL) << "Could not open a window with GLFW3";
+  }
+  glfwMakeContextCurrent(window);
 
-  //// Print some basic info
-  //const GLubyte* renderer = glGetString(GL_RENDERER);
-  //const GLubyte* version = glGetString(GL_VERSION);
-  //LOG(INFO) << "Renderer: " << renderer;
-  //LOG(INFO) << "OpenGL version supported: " << version;
+  // GLEW
+  LOG(INFO) << "Starting GLEW.. ";
+  glewExperimental = GL_TRUE;
+  glewInit();
+  LOG(INFO) << "... done!";
+
+  // Print some basic info
+  const GLubyte* renderer = glGetString(GL_RENDERER);
+  const GLubyte* version = glGetString(GL_VERSION);
+  LOG(INFO) << "Renderer: " << renderer;
+  LOG(INFO) << "OpenGL version supported: " << version;
+
+  return window;
 }
 
 void queso::error_callback(int error, const char* description) {
