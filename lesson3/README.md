@@ -10,3 +10,4 @@ Some plans include:
 * Cleaner app interface
 * Some basic shaders
 * Basic shader manager 
+* Unit tests
