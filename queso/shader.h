@@ -21,8 +21,8 @@ class Shader
   private:
 
     // No default c'tors.
-    Shader() {};
-    Shader(const Shader& shader) {};
+    Shader() {}
+    Shader(const Shader& shader) {}
 
     std::string m_source;
     unsigned int m_handle;
