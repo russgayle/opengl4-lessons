@@ -15,8 +15,8 @@ class Shader
     bool load(const std::string& filename);
     bool compile();
 
-    unsigned int getHandle() { return m_handle; }
-    ShaderType getType() { return m_type; }
+    unsigned int getHandle() const { return m_handle; }
+    ShaderType getType() const { return m_type; }
 
   private:
 
