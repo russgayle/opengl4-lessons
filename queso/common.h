@@ -2,7 +2,7 @@
 #define _COMMON_H_
 
 // std
-#include <iostream>
+#include <string>
 
 // google
 #include <gflags/gflags.h>    // Google gflags
