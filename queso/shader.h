@@ -28,6 +28,8 @@ class Shader
     unsigned int m_handle;
     ShaderType m_type;
     bool m_compiled;
+
+    std::string getShaderInfoLog();
 };
 
 } // namespace queso

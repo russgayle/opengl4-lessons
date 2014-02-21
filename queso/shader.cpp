@@ -1,5 +1,6 @@
 #include "shader.h"
 
+#include <sstream>
 #include <fstream>
 
 queso::Shader::Shader(const std::string& filename, ShaderType type, bool compileShader) 
@@ -46,8 +47,32 @@ bool queso::Shader::load(const std::string& filename)
 
 bool queso::Shader::compile()
 {
-  glCompileShader(m_handle);
-  m_compiled = true;
-  return true;
+  if (!m_compiled) {
+    glCompileShader(m_handle);
+
+    // Check for errors. TODO(rgayle): Make this part of a debug mode?
+    int params = -1;
+    glGetShaderiv(m_handle, GL_COMPILE_STATUS, &params);
+    m_compiled = params == GL_TRUE;
+
+    if (!m_compiled) {
+      LOG(ERROR) << "Shader " << m_handle << " did not compile. Details: "; 
+      LOG(ERROR) << getShaderInfoLog();
+    } 
+  }
+
+  return m_compiled;
+}
+
+std::string queso::Shader::getShaderInfoLog() {
+  int max_len = 2048;
+  int actual_len = 0;
+  char log[2048];
+  glGetShaderInfoLog(m_handle, max_len, &actual_len, log);
+  
+  std::ostringstream oss;
+  oss << "[Shader " << m_handle << "]: " << log;
+  return oss.str();
+
 }
 
