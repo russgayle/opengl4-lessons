@@ -17,6 +17,7 @@ class Shader
 
     unsigned int getHandle() const { return m_handle; }
     ShaderType getType() const { return m_type; }
+    std::string writeSource() const { return m_source; }
 
   private:
 

@@ -39,21 +39,20 @@ bool queso::Shader::load(const std::string& filename)
     }
     file.close();
   }
-
-  const char* source = m_source.c_str();
-  glShaderSource(m_handle, 1, &source, NULL);
   return true;
 }
 
 bool queso::Shader::compile()
 {
   if (!m_compiled) {
+    const char* source = m_source.c_str();
+    glShaderSource(m_handle, 1, &source, NULL);
     glCompileShader(m_handle);
 
     // Check for errors. TODO(rgayle): Make this part of a debug mode?
     int params = -1;
     glGetShaderiv(m_handle, GL_COMPILE_STATUS, &params);
-    m_compiled = params == GL_TRUE;
+    m_compiled = (params == GL_TRUE);
 
     if (!m_compiled) {
       LOG(ERROR) << "Shader " << m_handle << " did not compile. Details: "; 
