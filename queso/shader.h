@@ -1,7 +1,7 @@
 #ifndef _QUESO_SHADER_H_
 #define _QUESO_SHADER_H_
 
-#include "common.h"
+#include "queso.h"
  
 namespace queso {
 
