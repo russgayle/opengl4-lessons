@@ -3,6 +3,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(OpenGL4-Tutorial)
 
+# Install locally, by default
+set(CMAKE_INSTALL_PREFIX .)
+
 # Support library
 add_subdirectory(queso)
 

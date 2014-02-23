@@ -45,3 +45,9 @@ add_library(queso
 
 #target_link_libraries(lesson3 ${GLEW_LIBRARIES} ${GLFW_LIBARIES} ${MACOS_LIBS})
 target_link_libraries(queso ${GLEW_LIBRARIES} glfw3 ${GFLAGS_LIBRARIES} ${GLOG_LIBRARIES} ${EXTRA_DEPS})
+
+install(TARGETS queso
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
