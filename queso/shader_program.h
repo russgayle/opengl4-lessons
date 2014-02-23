@@ -22,6 +22,8 @@ namespace queso {
       ShaderProgram(const ShaderProgram& program) {}
 
       unsigned int m_handle;
+
+      std::string getProgramLogInfo();
   };
 
 } // namespace queso
