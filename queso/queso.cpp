@@ -1,5 +1,7 @@
 #include "queso.h"
 
+DEFINE_string(shader_dir, ".", "where to find the shaders");
+
 GLFWwindow* queso::init(int argc, char* argv[]) {
   // Init google flags
   google::SetVersionString("0.0.3");
