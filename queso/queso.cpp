@@ -1,4 +1,4 @@
-#include "common.h"
+#include "queso.h"
 
 GLFWwindow* queso::init(int argc, char* argv[]) {
   // Init google flags
