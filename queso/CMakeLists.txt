@@ -37,6 +37,7 @@ include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS})
 
 # build it, and they will come
 add_library(queso 
+  common.h
   queso.h           queso.cpp
   shader.h          shader.cpp
   shader_program.h  shader_program.cpp

@@ -1,17 +1,7 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-// std
-#include <string>
-
-// google
-#include <gflags/gflags.h>    // Google gflags
-#include <glog/logging.h>     // Google logging
-
-// opengl
-#include <GL/glew.h>
-#define GLFW_DLL
-#include <GLFW/glfw3.h>
+#include "common.h"
 
 namespace queso {
   
