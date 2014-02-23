@@ -16,6 +16,10 @@ namespace queso {
 
       unsigned int getHandle() const { return m_handle; }
 
+      // Debugging
+      void printAllInfo();
+      bool validate();
+
     private:
       // Don't allow these c'tors.
       ShaderProgram() {}
