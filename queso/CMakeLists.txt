@@ -45,13 +45,17 @@ set(QUESO_DEPS ${QUESO_DEPS} ${GFLAGS_LIBRARIES})
 pkg_search_module(GLOG REQUIRED libglog)
 include_directories(${GLOG_INCLUDE_DIRS})
 set(QUESO_DEPS ${QUESO_DEPS} ${GLOG_LIBRARIES})
-link_directories(${GLOG_LIBRARY_DIRS})
 
 # glew
-find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIR})
-set(QUESO_DEPS ${QUESO_DEPS} ${GLEW_LIBRARIES})
-link_directories(${GLEW_LIBRARY_DIRS})
+if(APPLE)
+  find_package(GLEW REQUIRED)
+  include_directories(${GLEW_INCLUDE_DIR})
+  set(QUESO_DEPS ${QUESO_DEPS} ${GLEW_LIBRARIES})
+elseif(UNIX)
+  pkg_search_module(GLEW REQUIRED glew)
+  include_directories(${GLEW_INCLUDE_DIRS})
+  set(QUESO_DEPS ${QUESO_DEPS} ${GLEW_LIBRARIES})
+endif()
 
 # glfw3
 # export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
