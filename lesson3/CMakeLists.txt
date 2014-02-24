@@ -6,8 +6,9 @@ include_directories(${OpenGL4-Tutorial_SOURCE_DIR}/queso)
 add_executable(lesson3 main.cpp)
 target_link_libraries(lesson3 queso)
 
-install(TARGETS lesson3 
+install(TARGETS lesson3
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
 )
+
