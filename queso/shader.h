@@ -2,7 +2,7 @@
 #define _QUESO_SHADER_H_
 
 #include "common.h"
- 
+
 namespace queso {
 
 enum ShaderType { VERTEX, FRAGMENT };
@@ -17,7 +17,8 @@ class Shader
 
     unsigned int getHandle() const { return m_handle; }
     ShaderType getType() const { return m_type; }
-    std::string writeSource() const { return m_source; }
+    std::string getSource() const { return m_source; }
+    std::string getFilename() const { return m_filename; }
 
   private:
 
@@ -25,6 +26,7 @@ class Shader
     Shader() {}
     Shader(const Shader& shader) {}
 
+    std::string m_filename;
     std::string m_source;
     unsigned int m_handle;
     ShaderType m_type;

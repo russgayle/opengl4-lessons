@@ -96,6 +96,10 @@ int main(int argc, char* argv[]) {
   queso::ShaderProgram prog1(vs1, fs1);
   queso::ShaderProgram prog2(vs2, fs2);
 
+  // Let's see what they're about
+  prog1.printAllInfo();
+  prog2.printAllInfo();
+
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 

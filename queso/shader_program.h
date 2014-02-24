@@ -25,6 +25,8 @@ namespace queso {
       ShaderProgram() {}
       ShaderProgram(const ShaderProgram& program) {}
 
+      const Shader* m_vertex;
+      const Shader* m_fragment;
       unsigned int m_handle;
 
       std::string getProgramLogInfo();
