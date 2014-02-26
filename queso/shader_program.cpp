@@ -1,6 +1,7 @@
 #include "shader_program.h"
 
 #include "shader.h"
+#include "utils.h"
 
 queso::ShaderProgram::ShaderProgram(const Shader& vertex, const Shader& fragment) {
   // TODO(rgayle): Verify that vertex is really a vertex, fragment is really a fragment
@@ -68,14 +69,14 @@ void queso::ShaderProgram::printAllInfo() {
         oss << name << "[" << j << "]";
         int location = glGetAttribLocation(m_handle, oss.str().c_str());
         LOG(INFO) << "\t\tAttribute #" << i
-          << ": type=" << type
+          << ": type=" << glTypeToString(type)
           << ", name=" << oss.str()
           << ", location=" << location;
       }
     } else {
       int location = glGetAttribLocation(m_handle, name);
       LOG(INFO) << "\t\tAttribute #" << i
-        << ": type=" << type
+        << ": type=" << glTypeToString(type)
         << ", name=" << name
         << ", location=" << location;
     }
@@ -95,14 +96,14 @@ void queso::ShaderProgram::printAllInfo() {
         oss << name << "[" << j << "]";
         int location = glGetUniformLocation(m_handle, oss.str().c_str());
         LOG(INFO) << "\t\tAttribute #" << i
-          << ": type=" << type
+          << ": type=" << glTypeToString(type)
           << ", name=" << oss.str()
           << ", location=" << location;
       }
     } else {
       int location = glGetUniformLocation(m_handle, name);
       LOG(INFO) << "\t\tAttribute #" << i
-        << ": type=" << type
+        << ": type=" << glTypeToString(type)
         << ", name=" << name
         << ", location=" << location;
     }
