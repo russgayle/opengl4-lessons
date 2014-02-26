@@ -1,4 +1,6 @@
 #include "queso.h"
+#include "shader.h"
+#include "shader_program.h"
 
 int width = 640;
 int height = 480; 
@@ -12,6 +14,14 @@ int main(int argc, char* argv[])
 {
   GLFWwindow* window = queso::init(argc, argv);
   glfwSetWindowSizeCallback(window, window_callback);
+
+  // Set up our shaders
+  queso::Shader vert("shaders/no_perspective.vert", queso::VERTEX, true); 
+  queso::Shader frag("shaders/uniform_color.frag", queso::FRAGMENT, true);
+
+  // Program!
+  queso::ShaderProgram prog(vert, frag);
+  prog.printAllInfo();
  
   LOG(INFO) << argv[0] << " completed. Thanks for playing.";
 }
