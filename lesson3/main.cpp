@@ -22,6 +22,12 @@ int main(int argc, char* argv[])
   // Program!
   queso::ShaderProgram prog(vert, frag);
   prog.printAllInfo();
+
+  // Testing.
+  unsigned int inputColorLocation = glGetUniformLocation(prog.getHandle(), "inputColor");
+  LOG(INFO) << "inputColor at location " << inputColorLocation;
+  prog.use();
+  glUniform4f(inputColorLocation, 1.0f, 0.0f, 0.0f, 1.0f); // red
  
   LOG(INFO) << argv[0] << " completed. Thanks for playing.";
 }
