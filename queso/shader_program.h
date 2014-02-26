@@ -16,6 +16,12 @@ namespace queso {
 
       unsigned int getHandle() const { return m_handle; }
 
+      // Uniforms
+      void setUniform(const std::string& name, float v);
+      void setUniform(const std::string& name, float v1, float v2);
+      void setUniform(const std::string& name, float v1, float v2, float v3);
+      void setUniform(const std::string& name, float v1, float v2, float v3, float v4);
+
       // Debugging
       void printAllInfo();
       bool validate();

@@ -26,6 +26,34 @@ void queso::ShaderProgram::use() {
   glUseProgram(m_handle);
 }
 
+void queso::ShaderProgram::setUniform(const std::string& name, float v) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform1f(loc, v); 
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform2f(loc, v1, v2); 
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2, float v3) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform3f(loc, v1, v2, v3); 
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2, float v3, float v4) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform4f(loc, v1, v2, v3, v4); 
+}
+
 std::string queso::ShaderProgram::getProgramLogInfo() {
   int max_len = 2048;
   int actual_len = 0;
