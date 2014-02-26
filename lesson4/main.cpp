@@ -54,17 +54,33 @@ int main(int argc, char* argv[]) {
     -0.5f,  -0.5f, 0.0f
   };
 
-  unsigned int vbo = 1;
-  glGenBuffers(1, &vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  float colors[] = {
+    1.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f
+  };
+
+  unsigned int points_vbo = 0;
+  glGenBuffers(1, &points_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
   glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
 
-  unsigned int vao = 1;
+  unsigned int colors_vbo = 0;
+  glGenBuffers(1, &colors_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+  glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), colors, GL_STATIC_DRAW);
+
+  unsigned int vao = 0;
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
+
+  glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL); // points are idx 0
+  glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL); // colors are idx 1
+
   glEnableVertexAttribArray(0);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+  glEnableVertexAttribArray(1);
 
   // Shader, program
   queso::Shader vs("shaders/no_perspective.vert", queso::VERTEX, true);
