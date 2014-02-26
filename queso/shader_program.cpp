@@ -1,6 +1,7 @@
 #include "shader_program.h"
 
 #include "shader.h"
+#include "utils.h"
 
 queso::ShaderProgram::ShaderProgram(const Shader& vertex, const Shader& fragment) {
   // TODO(rgayle): Verify that vertex is really a vertex, fragment is really a fragment
@@ -23,6 +24,34 @@ queso::ShaderProgram::ShaderProgram(const Shader& vertex, const Shader& fragment
 
 void queso::ShaderProgram::use() {
   glUseProgram(m_handle);
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform1f(loc, v); 
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform2f(loc, v1, v2); 
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2, float v3) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform3f(loc, v1, v2, v3); 
+}
+
+void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2, float v3, float v4) {
+  //TODO(rgayle): Pre-compute locations
+  //TODO(rgayle): Check if program is in use
+  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
+  glUniform4f(loc, v1, v2, v3, v4); 
 }
 
 std::string queso::ShaderProgram::getProgramLogInfo() {
@@ -68,14 +97,14 @@ void queso::ShaderProgram::printAllInfo() {
         oss << name << "[" << j << "]";
         int location = glGetAttribLocation(m_handle, oss.str().c_str());
         LOG(INFO) << "\t\tAttribute #" << i
-          << ": type=" << type
+          << ": type=" << glTypeToString(type)
           << ", name=" << oss.str()
           << ", location=" << location;
       }
     } else {
       int location = glGetAttribLocation(m_handle, name);
       LOG(INFO) << "\t\tAttribute #" << i
-        << ": type=" << type
+        << ": type=" << glTypeToString(type)
         << ", name=" << name
         << ", location=" << location;
     }
@@ -95,14 +124,14 @@ void queso::ShaderProgram::printAllInfo() {
         oss << name << "[" << j << "]";
         int location = glGetUniformLocation(m_handle, oss.str().c_str());
         LOG(INFO) << "\t\tAttribute #" << i
-          << ": type=" << type
+          << ": type=" << glTypeToString(type)
           << ", name=" << oss.str()
           << ", location=" << location;
       }
     } else {
       int location = glGetUniformLocation(m_handle, name);
       LOG(INFO) << "\t\tAttribute #" << i
-        << ": type=" << type
+        << ": type=" << glTypeToString(type)
         << ", name=" << name
         << ", location=" << location;
     }
