@@ -10,15 +10,38 @@
 // Globals
 int width = 640;
 int height = 480;
+bool wireframe = false;
+GLFWwindow* window;
 
 void window_callback(GLFWwindow* window, int p_width, int p_height) {
   width = p_width;
   height = p_height;
 }
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+  if ((key == GLFW_KEY_ESCAPE || key == GLFW_KEY_Q) && action == GLFW_PRESS) {
+      glfwSetWindowShouldClose(window, 1);
+  }
+
+  if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+    if (!wireframe) {
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+      LOG(INFO) << "Wireframe: ON";
+    } else {
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+      LOG(INFO) << "Wireframe: OFF";
+    }
+    wireframe = !wireframe;
+  }
+}
+
 int main(int argc, char* argv[]) {
 
-  GLFWwindow* window = queso::init(argc, argv);
+  window = queso::init(argc, argv);
+
+  // Register callbacks
+  glfwSetWindowSizeCallback(window, window_callback);
+  glfwSetKeyCallback(window, key_callback);
 
   // Setup OpenGL
   glEnable(GL_DEPTH_TEST);
@@ -56,6 +79,7 @@ int main(int argc, char* argv[]) {
 
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
+
     // Clear
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, width, height);
@@ -70,11 +94,6 @@ int main(int argc, char* argv[]) {
 
     // Poll for input handling
     glfwPollEvents();
-
-    // Check for escape-key press to close window
-    if(GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
-      glfwSetWindowShouldClose(window, 1);
-    }
   }
 
   glfwTerminate();
