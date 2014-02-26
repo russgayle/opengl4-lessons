@@ -12,8 +12,8 @@ See http://antongerdelan.net/opengl/ for details.
 
 Other things I want experiment with:
 
-* (OpenSceneGraph)[http://www.openscenegraph.org/] based solutions/
-* (Qt5)[http://qt-project.org/wiki/Qt_5.0] based solutions.
+* [OpenSceneGraph](http://www.openscenegraph.org/) based solutions/
+* [Qt5](http://qt-project.org/wiki/Qt_5.0) based solutions.
 * Screen-Space Ambiet Occlusion shaders
 
 
