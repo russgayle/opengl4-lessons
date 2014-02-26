@@ -70,6 +70,7 @@ add_library(queso
   queso.h           queso.cpp
   shader.h          shader.cpp
   shader_program.h  shader_program.cpp
+  utils.h           utils.cpp
 )
 
 target_link_libraries(queso ${QUESO_DEPS})
