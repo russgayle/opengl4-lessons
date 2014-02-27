@@ -2,7 +2,7 @@
 
 DEFINE_string(shader_dir, ".", "where to find the shaders");
 
-GLFWwindow* queso::init(int argc, char* argv[]) {
+GLFWwindow* queso::init(int argc, char* argv[], const std::string& appName) {
   // Init google flags
   google::SetVersionString("0.0.3");
   google::ParseCommandLineFlags(&argc, &argv, true);
@@ -23,16 +23,16 @@ GLFWwindow* queso::init(int argc, char* argv[]) {
   LOG(INFO) << "... done!";
 
   // Mac
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+  //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   // Preferences
   glfwWindowHint(GLFW_SAMPLES, 4); // anti-aliasing
 
   // Go ahead and make a window
-  GLFWwindow* window = glfwCreateWindow(640, 480, "Lesson 3. Queso style", NULL, NULL);
+  GLFWwindow* window = glfwCreateWindow(640, 480, appName.c_str(), NULL, NULL);
   if (!window) {
     glfwTerminate();
     LOG(FATAL) << "Could not open a window with GLFW3";

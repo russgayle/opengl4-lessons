@@ -37,7 +37,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, char* argv[]) {
 
-  window = queso::init(argc, argv);
+  window = queso::init(argc, argv, "Lesson 4: Vertex buffers");
 
   // Register callbacks
   glfwSetWindowSizeCallback(window, window_callback);

@@ -1,4 +1,4 @@
-// Lesson 2: http://antongerdelan.net/opengl/glcontext2.html 
+// Lesson 2: http://antongerdelan.net/opengl/glcontext2.html
 
 #include <fstream>
 
@@ -33,12 +33,12 @@ void updateFPSCounter(GLFWwindow* window) {
 }
 
 int main(int argc, char* argv[]) {
-  
-  GLFWwindow* window = queso::init(argc, argv);
+
+  GLFWwindow* window = queso::init(argc, argv, "Lesson 2(.1): Basic setup");
 
   // Setup OpenGL
   glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);  // TODO(rgayle): Is this necessary? 
+  glDepthFunc(GL_LESS);  // TODO(rgayle): Is this necessary?
 
   // Do stuff.
 
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
   unsigned int vbo = 0;
   glGenBuffers(1, &vbo);
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), points, GL_STATIC_DRAW); 
+  glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), points, GL_STATIC_DRAW);
 
   // Set up a Vertex Attribute Object (VAO) to keep track of our VBOs
   unsigned int vao = 0;
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
   float points2[] = {
      0.5f,  -0.5f, 0.0f,
      1.0f,  -0.5f, 0.0f,
-     0.75f,  0.0f, 0.0f 
+     0.75f,  0.0f, 0.0f
   };
 
   unsigned int vbo2 = 1;
@@ -112,15 +112,15 @@ int main(int argc, char* argv[]) {
     glViewport(0, 0, width, height);
 
     // Shape 1
-    prog1.use(); 
+    prog1.use();
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
     // Shape 2
-    prog2.use(); 
+    prog2.use();
     glBindVertexArray(vao2);
     glDrawArrays(GL_TRIANGLES, 0, 3);
-    
+
     // Put it on the screen!
     glfwSwapBuffers(window);
 
