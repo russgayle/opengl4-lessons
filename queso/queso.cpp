@@ -1,5 +1,7 @@
 #include "queso.h"
 
+#include "key_handler.h"
+
 DEFINE_string(shader_dir, ".", "where to find the shaders");
 
 GLFWwindow* queso::init(int argc, char* argv[], const std::string& appName) {
@@ -50,6 +52,9 @@ GLFWwindow* queso::init(int argc, char* argv[], const std::string& appName) {
   const GLubyte* version = glGetString(GL_VERSION);
   LOG(INFO) << "Renderer: " << renderer;
   LOG(INFO) << "OpenGL version supported: " << version;
+
+  // Default handlers
+  glfwSetKeyCallback(window, queso::keyHandler);
 
   return window;
 }

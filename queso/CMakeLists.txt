@@ -67,6 +67,7 @@ set(QUESO_DEPS ${QUESO_DEPS} glfw3)
 # build it, and they will come
 add_library(queso
   common.h
+  key_handler.h     key_handler.cpp
   queso.h           queso.cpp
   shader.h          shader.cpp
   shader_program.h  shader_program.cpp
