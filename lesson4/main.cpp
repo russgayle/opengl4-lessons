@@ -18,30 +18,12 @@ void window_callback(GLFWwindow* window, int p_width, int p_height) {
   height = p_height;
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-  if ((key == GLFW_KEY_ESCAPE || key == GLFW_KEY_Q) && action == GLFW_PRESS) {
-      glfwSetWindowShouldClose(window, 1);
-  }
-
-  if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-    if (!wireframe) {
-      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-      LOG(INFO) << "Wireframe: ON";
-    } else {
-      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-      LOG(INFO) << "Wireframe: OFF";
-    }
-    wireframe = !wireframe;
-  }
-}
-
 int main(int argc, char* argv[]) {
 
   window = queso::init(argc, argv, "Lesson 4: Vertex buffers");
 
   // Register callbacks
   glfwSetWindowSizeCallback(window, window_callback);
-  glfwSetKeyCallback(window, key_callback);
 
   // Setup OpenGL
   glEnable(GL_DEPTH_TEST);
