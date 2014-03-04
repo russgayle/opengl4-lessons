@@ -70,7 +70,6 @@ int main(int argc, char* argv[]) {
 
   queso::ShaderProgram prog(vs, fs);
   prog.use();
-  prog.setUniform("inputColor", 1.0f, 0.0f, 0.0f, 1.0f); // red
 
   // Simple vertex transform
   // Note: It's in column order. So, it would really look like: 
