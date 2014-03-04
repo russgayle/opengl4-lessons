@@ -14,4 +14,9 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+// Let apps use queso's globals
+namespace queso {
+  extern bool paused;
+}
+
 #endif // _QUESO_COMMON_H_

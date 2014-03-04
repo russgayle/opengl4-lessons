@@ -20,12 +20,12 @@ void queso::keyHandler(GLFWwindow* window, int key, int scancode, int action, in
     wireframe = !wireframe;
   }
 
-  //// Toggle pause
-  //if (key == GLFW_KEY_P && action == GLFW_PRESS) {
-  //  queso::paused = !queso::paused;
+  // Toggle pause
+  if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+    queso::paused = !queso::paused;
 
-  //  if (queso::paused) VLOG(1) << "Paused.";
-  //  else VLOG(1) << "Playing.";
-  //}
+    if (queso::paused) VLOG(1) << "Paused.";
+    else VLOG(1) << "Playing.";
+  }
 }
 
