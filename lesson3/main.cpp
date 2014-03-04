@@ -1,6 +1,4 @@
 #include "queso.h"
-#include "shader.h"
-#include "shader_program.h"
 
 int width = 640;
 int height = 480;

@@ -4,8 +4,6 @@
 
 // Queso!
 #include "queso.h"
-#include "shader.h"
-#include "shader_program.h"
 
 // Globals
 int width = 640;
@@ -88,8 +86,28 @@ int main(int argc, char* argv[]) {
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 
+  // Variables for moving the triangle. 
+  float speed = 1.0f;
+  float last_position = matrix[12];
+
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
+
+    // Timer, for animations.
+    static double previousTime = glfwGetTime();
+    double currTime = glfwGetTime();
+    double elapsedTime = currTime - previousTime;
+
+    // ReverseDirection if we get too far left or right
+    if (fabs(last_position) > 1.0f) {
+      speed *= -1;
+    }
+
+    // Update our matrix
+    if (!queso::paused) {
+      matrix[12] = elapsedTime * speed + last_position;
+      prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, matrix);
+    }
 
     // Clear
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -4,8 +4,6 @@
 
 // Queso!
 #include "queso.h"
-#include "shader.h"
-#include "shader_program.h"
 
 // Globals
 int width = 640;
