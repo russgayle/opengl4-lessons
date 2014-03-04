@@ -1,5 +1,5 @@
-#ifndef _COMMON_H_
-#define _COMMON_H_
+#ifndef _QUESO_APP_H_
+#define _QUESO_APP_H_
 
 #include "common.h"
 
