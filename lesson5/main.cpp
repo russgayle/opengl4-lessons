@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
 
   // Variables for moving the triangle. 
   float speed = 1.0f;
-  float last_position = matrix[12];
+  float last_pos = matrix[12];
 
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
@@ -97,15 +97,22 @@ int main(int argc, char* argv[]) {
     static double previousTime = glfwGetTime();
     double currTime = glfwGetTime();
     double elapsedTime = currTime - previousTime;
+    previousTime = currTime;
 
     // ReverseDirection if we get too far left or right
-    if (fabs(last_position) > 1.0f) {
+    if (last_pos > 1.0f) {
+      last_pos = 1.0;
+      speed *= -1;
+    } else if (last_pos < -1.0f) {
+      last_pos = -1.0f;
       speed *= -1;
     }
 
     // Update our matrix
-    if (false) { 
-      matrix[12] = elapsedTime * speed + last_position;
+    if (!queso::paused) { 
+      matrix[12] = elapsedTime * speed + last_pos;
+      last_pos = matrix[12];
+
       prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, matrix);
     }
 
