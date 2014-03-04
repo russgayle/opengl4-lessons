@@ -72,6 +72,24 @@ int main(int argc, char* argv[]) {
   prog.use();
   prog.setUniform("inputColor", 1.0f, 0.0f, 0.0f, 1.0f); // red
 
+  // Simple vertex transform
+  // Note: It's in column order. So, it would really look like: 
+  // | 1   0   0 0.5 |
+  // | 0   1   0   0 |
+  // | 0   0   1   0 |
+  // | 0   0   0   1 | 
+  float matrix[] = {
+    1.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f, 0.0f, 
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.5f, 0.0f, 0.0f, 1.0f
+  };
+
+  // TODO(rgayle): Define a better way to do this using ShaderProgram.
+  int matrix_loc = glGetUniformLocation(prog.getHandle(), "matrix");
+  prog.use();
+  glUniformMatrix4fv(matrix_loc, 1, GL_FALSE, matrix);
+
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 
