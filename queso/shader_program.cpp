@@ -26,32 +26,73 @@ void queso::ShaderProgram::use() {
   glUseProgram(m_handle);
 }
 
-void queso::ShaderProgram::setUniform(const std::string& name, float v) {
-  //TODO(rgayle): Pre-compute locations
-  //TODO(rgayle): Check if program is in use
-  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
-  glUniform1f(loc, v); 
+bool queso::ShaderProgram::setUniform(const std::string& name, GLint v) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform1i(loc, v);
+  return loc != -1;
 }
 
-void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2) {
-  //TODO(rgayle): Pre-compute locations
-  //TODO(rgayle): Check if program is in use
-  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
-  glUniform2f(loc, v1, v2); 
+bool queso::ShaderProgram::setUniform(const std::string& name, GLint v1, GLint v2) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform2i(loc, v1, v2);
+  return loc != -1;
 }
 
-void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2, float v3) {
-  //TODO(rgayle): Pre-compute locations
-  //TODO(rgayle): Check if program is in use
-  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
-  glUniform3f(loc, v1, v2, v3); 
+bool queso::ShaderProgram::setUniform(const std::string& name, GLint v1, GLint v2, GLint v3) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform3i(loc, v1, v2, v3);
+  return loc != -1;
 }
 
-void queso::ShaderProgram::setUniform(const std::string& name, float v1, float v2, float v3, float v4) {
-  //TODO(rgayle): Pre-compute locations
-  //TODO(rgayle): Check if program is in use
-  unsigned int loc = glGetUniformLocation(m_handle, name.c_str());
-  glUniform4f(loc, v1, v2, v3, v4); 
+bool queso::ShaderProgram::setUniform(const std::string& name, GLint v1, GLint v2, GLint v3, GLint v4) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform4i(loc, v1, v2, v3, v4);
+  return loc != -1;
+}
+
+bool queso::ShaderProgram::setUniform(const std::string& name, GLfloat v) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform1f(loc, v);
+  return loc != -1;
+}
+
+bool queso::ShaderProgram::setUniform(const std::string& name, GLfloat v1, GLfloat v2) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform2f(loc, v1, v2);
+  return loc != -1;
+}
+
+bool queso::ShaderProgram::setUniform(const std::string& name, GLfloat v1, GLfloat v2, GLfloat v3) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform3f(loc, v1, v2, v3);
+  return loc != -1;
+}
+
+bool queso::ShaderProgram::setUniform(const std::string& name, GLfloat v1, GLfloat v2, GLfloat v3, GLfloat v4) {
+  GLint loc = getLocation(name);
+  if (loc != -1) glUniform4f(loc, v1, v2, v3, v4);
+  return loc != -1;
+}
+
+bool queso::ShaderProgram::setUniform(const std::string& name, MatrixType matType, GLboolean transpose, const GLfloat* value) {
+  GLint loc = getLocation(name);
+  if (loc != -1) {
+    switch(matType) {
+      case TWO_BY_TWO:
+        glUniformMatrix2fv(loc, 1, transpose, value);
+        return true;
+      case THREE_BY_THREE: 
+        glUniformMatrix3fv(loc, 1, transpose, value);
+        return true;
+      case FOUR_BY_FOUR:
+        glUniformMatrix4fv(loc, 1, transpose, value);
+        return true;
+      default: 
+        LOG(WARNING) << "Unknown matrix type.";
+        break;
+    }
+  }
+  return false;
 }
 
 std::string queso::ShaderProgram::getProgramLogInfo() {
@@ -155,4 +196,17 @@ bool queso::ShaderProgram::validate() {
     LOG(INFO) << "[Program " << m_handle << "]: Validated!";
     return true;
   }
+}
+
+GLint queso::ShaderProgram::getLocation(const std::string& name, bool useProgram) {
+  // For safer operation, make sure program is in use before doing all of this.
+  if (useProgram) use();
+
+  // TODO(rgayle): Precompute locations?
+  GLint loc = glGetUniformLocation(m_handle, name.c_str());
+  if (loc == -1) { 
+    LOG(WARNING) << "Could not find uniform \"" << name << "\" in program " << m_handle;
+  }
+
+  return loc;
 }
