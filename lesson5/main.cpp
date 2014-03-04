@@ -84,11 +84,7 @@ int main(int argc, char* argv[]) {
     0.0f, 0.0f, 1.0f, 0.0f,
     0.5f, 0.0f, 0.0f, 1.0f
   };
-
-  // TODO(rgayle): Define a better way to do this using ShaderProgram.
-  int matrix_loc = glGetUniformLocation(prog.getHandle(), "matrix");
-  prog.use();
-  glUniformMatrix4fv(matrix_loc, 1, GL_FALSE, matrix);
+  prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, matrix);
 
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
