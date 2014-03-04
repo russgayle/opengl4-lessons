@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Update our matrix
-    if (!queso::paused) {
+    if (false) { 
       matrix[12] = elapsedTime * speed + last_position;
       prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, matrix);
     }
