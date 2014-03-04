@@ -3,10 +3,12 @@
 void queso::keyHandler(GLFWwindow* window, int key, int scancode, int action, int mods) {
   static bool wireframe = false;
 
+  // Exit
   if ((key == GLFW_KEY_ESCAPE || key == GLFW_KEY_Q) && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, 1);
   }
 
+  // Toggle wireframe
   if (key == GLFW_KEY_W && action == GLFW_PRESS) {
     if (!wireframe) {
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -16,6 +18,11 @@ void queso::keyHandler(GLFWwindow* window, int key, int scancode, int action, in
       VLOG(1) << "Wireframe: OFF";
     }
     wireframe = !wireframe;
+  }
+
+  // Toggle pause
+  if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+    queso::paused = !queso::paused;
   }
 }
 
