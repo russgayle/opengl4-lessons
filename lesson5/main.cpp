@@ -79,14 +79,19 @@ int main(int argc, char* argv[]) {
 
   // Simple vertex transform
   float last_pos = 0.5f;
-  glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0));
-  prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(translate));
+  float rot = 0.5f; // in radians
+  glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
+  glm::mat4 rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f)); 
+
+  // Set the transform
+  prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rotate));
 
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 
   // Variables for moving the triangle. 
   float speed = 1.0f;
+  float rot_speed = 0.5f;
 
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
@@ -107,8 +112,12 @@ int main(int argc, char* argv[]) {
     // Update our matrix
     if (!queso::paused) { 
       last_pos += elapsedTime * speed;
+      rot += elapsedTime * rot_speed;
+      
       translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
-      prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(translate));
+      rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f)); 
+
+      prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rotate));
     }
 
     // Clear
