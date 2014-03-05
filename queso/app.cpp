@@ -24,11 +24,13 @@ GLFWwindow* queso::init(int argc, char* argv[], const std::string& appName) {
   }
   LOG(INFO) << "... done!";
 
-  // Mac
+#ifdef __APPLE__
+   Mac
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
 
   // Preferences
   glfwWindowHint(GLFW_SAMPLES, 4); // anti-aliasing
