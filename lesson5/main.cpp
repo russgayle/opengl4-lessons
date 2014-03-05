@@ -2,8 +2,15 @@
 
 #include <fstream>
 
+// Setup GLM
+#define GLM_FORCE_RADIANS
+
 // Queso!
 #include "queso.h"
+
+// GLM extras
+#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
+#include <glm/gtc/type_ptr.hpp>         // glm::value_ptr
 
 // Globals
 int width = 640;
@@ -40,6 +47,7 @@ int main(int argc, char* argv[]) {
     0.0f, 0.0f, 1.0f
   };
 
+  // VBOs
   unsigned int points_vbo = 0;
   glGenBuffers(1, &points_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
@@ -62,7 +70,7 @@ int main(int argc, char* argv[]) {
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
 
-  // Shader, program
+  // Shaders and shader program
   queso::Shader vs("shaders/no_perspective.vert", queso::VERTEX, true);
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
 
@@ -70,25 +78,15 @@ int main(int argc, char* argv[]) {
   prog.use();
 
   // Simple vertex transform
-  // Note: It's in column order. So, it would really look like: 
-  // | 1   0   0 0.5 |
-  // | 0   1   0   0 |
-  // | 0   0   1   0 |
-  // | 0   0   0   1 | 
-  float matrix[] = {
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f, 
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.5f, 0.0f, 0.0f, 1.0f
-  };
-  prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, matrix);
+  float last_pos = 0.5f;
+  glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0));
+  prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(translate));
 
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 
   // Variables for moving the triangle. 
   float speed = 1.0f;
-  float last_pos = matrix[12];
 
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
@@ -100,20 +98,17 @@ int main(int argc, char* argv[]) {
     previousTime = currTime;
 
     // ReverseDirection if we get too far left or right
-    if (last_pos > 1.0f) {
-      last_pos = 1.0;
-      speed *= -1;
-    } else if (last_pos < -1.0f) {
-      last_pos = -1.0f;
+    if (fabs(last_pos) > 1.0f) {
+      if (last_pos < 0) last_pos = -1.0f;
+      else last_pos = 1.0;
       speed *= -1;
     }
 
     // Update our matrix
     if (!queso::paused) { 
-      matrix[12] = elapsedTime * speed + last_pos;
-      last_pos = matrix[12];
-
-      prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, matrix);
+      last_pos += elapsedTime * speed;
+      translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
+      prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(translate));
     }
 
     // Clear
