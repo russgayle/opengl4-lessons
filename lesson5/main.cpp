@@ -25,7 +25,7 @@ void window_callback(GLFWwindow* window, int p_width, int p_height) {
 
 int main(int argc, char* argv[]) {
 
-  window = queso::init(argc, argv, "Lesson 4: Vertex buffers");
+  window = queso::init(argc, argv, "Lesson 5: Basic transforms");
 
   // Register callbacks
   glfwSetWindowSizeCallback(window, window_callback);
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
   float last_pos = 0.5f;
   float rot = 0.5f; // in radians
   glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
-  glm::mat4 rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f)); 
+  glm::mat4 rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f));
 
   // Set the transform
   prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rotate));
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 
-  // Variables for moving the triangle. 
+  // Variables for moving the triangle.
   float speed = 1.0f;
   float rot_speed = 0.5f;
 
@@ -110,12 +110,12 @@ int main(int argc, char* argv[]) {
     }
 
     // Update our matrix
-    if (!queso::paused) { 
+    if (!queso::paused) {
       last_pos += elapsedTime * speed;
       rot += elapsedTime * rot_speed;
-      
+
       translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
-      rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f)); 
+      rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f));
 
       prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rotate));
     }
