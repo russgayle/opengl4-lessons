@@ -9,10 +9,11 @@
 #include <gflags/gflags.h>    // Google gflags
 #include <glog/logging.h>     // Google logging
 
-// opengl
+// opengl and related
 #include <GL/glew.h>
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 // Let apps use queso's globals
 namespace queso {

@@ -64,6 +64,9 @@ pkg_search_module(GLFW REQUIRED glfw3)
 include_directories(${GLFW_INCLUDE_DIRS})
 set(QUESO_DEPS ${QUESO_DEPS} glfw3)
 
+# glm -- by design it's in this location
+include_directories(${OpenGL4-Tutorial_SOURCE_DIR}/glm)
+
 # build it, and they will come
 add_library(queso
   app.h             app.cpp
