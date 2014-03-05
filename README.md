@@ -7,6 +7,7 @@ Exercises with OpenGL 4 (on Mac and Ubuntu 12.04LTS)
 * Lesson 2: More robust initialization.
 * Lesson 3: Infrastructure for sustainable shader / OpenGL development! 
 * Lesson 4: VBOs, VAOs...
+* Lesson 5: Basic transforms
 
 See http://antongerdelan.net/opengl/ for details.
 
