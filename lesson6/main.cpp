@@ -78,8 +78,8 @@ int main(int argc, char* argv[]) {
   prog.use();
 
   // Simple vertex transform
-  float last_pos = 0.5f;
-  float rot = 0.5f; // in radians
+  float last_pos = 0.0f;
+  float rot = 0.0f; // in radians
   glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
   glm::mat4 rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -89,36 +89,24 @@ int main(int argc, char* argv[]) {
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 
-  // Variables for moving the triangle.
-  float speed = 1.0f;
-  float rot_speed = 0.5f;
-
   // Set up our drawing loop
   while (!glfwWindowShouldClose(window)) {
 
-    // Timer, for animations.
+    // Timer -- to update FPS
     static double previousTime = glfwGetTime();
+    static int frameCount;
     double currTime = glfwGetTime();
     double elapsedTime = currTime - previousTime;
-    previousTime = currTime;
 
-    // ReverseDirection if we get too far left or right
-    if (fabs(last_pos) > 1.0f) {
-      if (last_pos < 0) last_pos = -1.0f;
-      else last_pos = 1.0;
-      speed *= -1;
+    if (elapsedTime > 0.25) {
+      previousTime = currTime;
+      double fps = (double)frameCount / elapsedTime;
+      std::ostringstream oss;
+      oss << "Lesson 6: Virtual Camera [" << fps << " fps]";
+      glfwSetWindowTitle(window, oss.str().c_str());
+      frameCount = 0;
     }
-
-    // Update our matrix
-    if (!queso::paused) {
-      last_pos += elapsedTime * speed;
-      rot += elapsedTime * rot_speed;
-
-      translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
-      rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f));
-
-      prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rotate));
-    }
+    frameCount++;
 
     // Clear
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
