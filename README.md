@@ -35,10 +35,10 @@ Ubuntu 12.04
 Dependencies
 ------------
 
-GLEW
-GLFW
-google-gflags
-google-glog
+* GLEW
+* GLFW
+* google-gflags
+* google-glog
 
 Build
 -----
