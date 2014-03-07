@@ -17,7 +17,15 @@
 
 // Let apps use queso's globals
 namespace queso {
+
+  // Play/pause
   extern bool paused;
+
+  // Camera settings
+  extern float camPos[];
+  extern float camYaw;
+  extern float camSpeed;
+  extern float camRotSpeed;
 }
 
 #endif // _QUESO_COMMON_H_

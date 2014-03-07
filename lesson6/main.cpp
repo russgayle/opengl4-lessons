@@ -75,21 +75,15 @@ int main(int argc, char* argv[]) {
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
   queso::ShaderProgram prog(vs, fs);
 
-  // Camera parameters 
-  float cameraSpeed = 1.0f;                 // 1 unit per second
-  float cameraRotSpeed = 3.141592 / 18.0;   // About 10 degs per second
-  float cameraPos[] = { 0.0f, 0.0f, 2.0f }; // Initial camera position
-  float cameraYaw = 0.0f;                   // Initial rotation
-
-  // Setup camera
+  // Camera -- note that queso stores some variables for the camera
 
   // Projection
   glm::mat4 projection = glm::perspective(3.141592f / 3.0f, 640.0f / 480.0f, 0.1f, 100.0f);
 
   // View
   glm::mat4 translate = glm::translate(
-    glm::mat4(1.0f), glm::vec3(-cameraPos[0], -cameraPos[1], -cameraPos[2]));
-  glm::mat4 rot = glm::rotate(translate, cameraYaw, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4(1.0f), glm::vec3(-queso::camPos[0], -queso::camPos[1], -queso::camPos[2]));
+  glm::mat4 rot = glm::rotate(translate, queso::camYaw, glm::vec3(0.0f, 1.0f, 0.0f));
 
   // Model
   // None for now.
