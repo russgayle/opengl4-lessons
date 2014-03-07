@@ -21,6 +21,7 @@ My long ways away to do...
 * Unit testing. I probably need to start that now.
 * Make things more modular. Be able to run some modules as threads or separate processes. (Perhaps use protobuf to pass data around?)
 * More in-depth on GLSL? [DINDINX](http://dindinx.net/OpenGL/index.php?menu=exemples&submenu=shaders).
+* Other GLSL tutorials (e.g. [Lighthouse3d](http://www.lighthouse3d.com/)
 * Embedded python interpreter? 
 
 This may migrate to a entirely different project as it grows.
