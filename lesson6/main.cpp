@@ -9,8 +9,8 @@
 #include "queso.h"
 
 // GLM extras
-#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
-#include <glm/gtc/type_ptr.hpp>         // glm::value_ptr
+#include <glm/gtc/matrix_transform.hpp>   // glm::translate, glm::rotate, glm::scale
+#include <glm/gtc/type_ptr.hpp>           // glm::value_ptr
 
 // Globals
 int width = 640;
@@ -71,20 +71,32 @@ int main(int argc, char* argv[]) {
   glEnableVertexAttribArray(1);
 
   // Shaders and shader program
-  queso::Shader vs("shaders/no_perspective.vert", queso::VERTEX, true);
+  queso::Shader vs("shaders/perspective.vert", queso::VERTEX, true);
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
-
   queso::ShaderProgram prog(vs, fs);
-  prog.use();
 
-  // Simple vertex transform
-  float last_pos = 0.0f;
-  float rot = 0.0f; // in radians
-  glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(last_pos, 0.0f, 0.0f));
-  glm::mat4 rotate = glm::rotate(translate, rot, glm::vec3(0.0f, 0.0f, 1.0f));
+  // Camera parameters 
+  float cameraSpeed = 1.0f;                 // 1 unit per second
+  float cameraRotSpeed = 3.141592 / 18.0;   // About 10 degs per second
+  float cameraPos[] = { 0.0f, 0.0f, 2.0f }; // Initial camera position
+  float cameraYaw = 0.0f;                   // Initial rotation
 
-  // Set the transform
-  prog.setUniform("matrix", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rotate));
+  // Setup camera
+
+  // Projection
+  glm::mat4 projection = glm::perspective(3.141592f / 3.0f, 640.0f / 480.0f, 0.1f, 100.0f);
+
+  // View
+  glm::mat4 translate = glm::translate(
+    glm::mat4(1.0f), glm::vec3(-cameraPos[0], -cameraPos[1], -cameraPos[2]));
+  glm::mat4 rot = glm::rotate(translate, cameraYaw, glm::vec3(0.0f, 1.0f, 0.0f));
+
+  // Model
+  // None for now.
+
+  // Set uniforms
+  prog.setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rot));
+  prog.setUniform("proj", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(projection));
 
   // Other setup
   glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
