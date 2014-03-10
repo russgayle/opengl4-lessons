@@ -16,7 +16,10 @@ My long ways away to do...
 
 * [OpenSceneGraph](http://www.openscenegraph.org/) based solutions/
 * [Qt5](http://qt-project.org/wiki/Qt_5.0) based solutions.
-* Screen-Space Ambiet Occlusion shaders
+* Shaders
+  * Gooch
+  * Screen-Space Ambiet Occlusion shaders
+  * Shadows
 * iOS and Android variants (i.e. OpenGL ES 2+)
 * Unit testing. I probably need to start that now.
 * Make things more modular. Be able to run some modules as threads or separate processes. (Perhaps use protobuf to pass data around?)
