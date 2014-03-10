@@ -18,7 +18,7 @@ int height = 480;
 bool wireframe = false;
 GLFWwindow* window;
 
-void window_callback(GLFWwindow* window, int p_width, int p_height) {
+void framebuffer_callback(GLFWwindow* window, int p_width, int p_height) {
   width = p_width;
   height = p_height;
 }
@@ -27,8 +27,12 @@ int main(int argc, char* argv[]) {
 
   window = queso::init(argc, argv, "Lesson 6: Virtual Camera");
 
+  // TODO(rgayle): Move this logic into queso.
+  // Fix for retina displays
+  glfwGetFramebufferSize(window, &width, &height);
+
   // Register callbacks
-  glfwSetWindowSizeCallback(window, window_callback);
+  glfwSetFramebufferSizeCallback(window, framebuffer_callback);
 
   // Setup OpenGL
   glEnable(GL_DEPTH_TEST);
