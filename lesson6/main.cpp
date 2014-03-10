@@ -35,38 +35,22 @@ int main(int argc, char* argv[]) {
   glDepthFunc(GL_LESS);  // TODO(rgayle): Is this necessary?
 
   // Set up a triangle.
+  queso::Drawable triangle;
+
   float points[] = {
      0.0f,   0.5f, 0.0f,
      0.5f,  -0.5f, 0.0f,
     -0.5f,  -0.5f, 0.0f
   };
+  triangle.addVertices(9, points);
 
   float colors[] = {
     1.0f, 0.0f, 0.0f,
     0.0f, 1.0f, 0.0f,
     0.0f, 0.0f, 1.0f
   };
-
-  // VBOs
-  unsigned int points_vbo = 0;
-  glGenBuffers(1, &points_vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
-  glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
-
-  unsigned int colors_vbo = 0;
-  glGenBuffers(1, &colors_vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-  glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), colors, GL_STATIC_DRAW);
-
-  unsigned int vao = 0;
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
-
-  glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL); // points are idx 0
-  glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL); // colors are idx 1
-
+  triangle.addColors(9, colors);
+  
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
 
@@ -75,21 +59,16 @@ int main(int argc, char* argv[]) {
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
   queso::ShaderProgram prog(vs, fs);
 
-  // Camera -- note that queso stores some variables for the camera
-
   // Projection
   glm::mat4 projection = glm::perspective(3.141592f / 3.0f, 640.0f / 480.0f, 0.1f, 100.0f);
 
   // View
   glm::mat4 translate = glm::translate(
     glm::mat4(1.0f), glm::vec3(-queso::camPos[0], -queso::camPos[1], -queso::camPos[2]));
-  glm::mat4 rot = glm::rotate(translate, queso::camYaw, glm::vec3(0.0f, 1.0f, 0.0f));
-
-  // Model
-  // None for now.
+  glm::mat4 view = glm::rotate(translate, queso::camYaw, glm::vec3(0.0f, 1.0f, 0.0f));
 
   // Set uniforms
-  prog.setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(rot));
+  prog.setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(view));
   prog.setUniform("proj", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(projection));
 
   // Other setup
@@ -120,8 +99,7 @@ int main(int argc, char* argv[]) {
 
     // Shape 1
     prog.use();
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    triangle.draw();
 
     // Put it on the screen!
     glfwSwapBuffers(window);
