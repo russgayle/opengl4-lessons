@@ -4,6 +4,7 @@
 #include "common.h"
 
 #include "app.h"
+#include "drawable.h"
 #include "shader.h"
 #include "shader_program.h"
 

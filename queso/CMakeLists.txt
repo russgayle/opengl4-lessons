@@ -71,6 +71,7 @@ include_directories(${OpenGL4-Tutorial_SOURCE_DIR}/glm)
 add_library(queso
   app.h             app.cpp
   common.h          common.cpp
+  drawable.h        drawable.cpp
   key_handler.h     key_handler.cpp
   queso.h           
   shader.h          shader.cpp
