@@ -55,9 +55,6 @@ int main(int argc, char* argv[]) {
   };
   triangle.addColors(9, colors);
   
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
-
   // Shaders and shader program
   queso::Shader vs("shaders/perspective.vert", queso::VERTEX, true);
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
