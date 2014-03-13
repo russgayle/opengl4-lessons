@@ -2,8 +2,10 @@
 #define _QUESO_COMMON_H_
 
 // std
+#include <map>
 #include <math.h>
 #include <string>
+#include <vector>
 
 // google
 #include <gflags/gflags.h>    // Google gflags
