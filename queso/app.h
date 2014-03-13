@@ -11,7 +11,7 @@ namespace queso {
     public:
       App(int argc, char* argv[], const std::string& appName, bool appendFPS = true); 
 
-      void addProgram(ShaderProgram* program) { m_programs.push_back(program); }
+      void addShaderProgram(ShaderProgram* program) { m_programs.push_back(program); }
       void addDrawable(Drawable* drawable) { m_drawables.push_back(drawable); }
       void run();
 
