@@ -12,31 +12,9 @@
 #include <glm/gtc/matrix_transform.hpp>   // glm::translate, glm::rotate, glm::scale
 #include <glm/gtc/type_ptr.hpp>           // glm::value_ptr
 
-// Globals
-int width = 640;
-int height = 480;
-bool wireframe = false;
-GLFWwindow* window;
-
-void framebuffer_callback(GLFWwindow* window, int p_width, int p_height) {
-  width = p_width;
-  height = p_height;
-}
-
 int main(int argc, char* argv[]) {
 
-  window = queso::init(argc, argv, "Lesson 6: Virtual Camera");
-
-  // TODO(rgayle): Move this logic into queso.
-  // Fix for retina displays
-  glfwGetFramebufferSize(window, &width, &height);
-
-  // Register callbacks
-  glfwSetFramebufferSizeCallback(window, framebuffer_callback);
-
-  // Setup OpenGL
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);  // TODO(rgayle): Is this necessary?
+  queso::App lesson6(argc, argv, "Lesson 6: Virtual Camera");
 
   // Set up a triangle.
   queso::Drawable triangle;
@@ -54,7 +32,7 @@ int main(int argc, char* argv[]) {
     0.0f, 0.0f, 1.0f
   };
   triangle.addColors(9, colors);
-  
+
   // Shaders and shader program
   queso::Shader vs("shaders/perspective.vert", queso::VERTEX, true);
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
@@ -71,45 +49,10 @@ int main(int argc, char* argv[]) {
   // Set uniforms
   prog.setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(view));
   prog.setUniform("proj", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(projection));
-
-  // Other setup
-  glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
-
-  // Set up our drawing loop
-  while (!glfwWindowShouldClose(window)) {
-
-    // Timer -- to update FPS
-    static double previousTime = glfwGetTime();
-    static int frameCount;
-    double currTime = glfwGetTime();
-    double elapsedTime = currTime - previousTime;
-
-    if (elapsedTime > 0.25) {
-      previousTime = currTime;
-      double fps = (double)frameCount / elapsedTime;
-      std::ostringstream oss;
-      oss << "Lesson 6: Virtual Camera [" << fps << " fps]";
-      glfwSetWindowTitle(window, oss.str().c_str());
-      frameCount = 0;
-    }
-    frameCount++;
-
-    // Clear
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, width, height);
-
-    // Shape 1
-    prog.use();
-    triangle.draw();
-
-    // Put it on the screen!
-    glfwSwapBuffers(window);
-
-    // Poll for input handling
-    glfwPollEvents();
-  }
-
-  glfwTerminate();
+   
+  lesson6.addDrawable(&triangle);
+  lesson6.addShaderProgram(&prog);
+  lesson6.run();
   return 0;
 }
 
