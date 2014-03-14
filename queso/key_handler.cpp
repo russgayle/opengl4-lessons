@@ -29,22 +29,41 @@ void queso::keyHandler(GLFWwindow* window, int key, int scancode, int action, in
   }
 
   // Camera
-  if (key == GLFW_KEY_A && action == GLFW_PRESS) 
-    queso::camPos[0] -= camSpeed;
-  if (key == GLFW_KEY_D && action == GLFW_PRESS)
-    queso::camPos[0] += camSpeed;
-  if (key == GLFW_KEY_PAGE_UP && action == GLFW_PRESS)
-    queso::camPos[1] += camSpeed;
-  if (key == GLFW_KEY_PAGE_DOWN && action == GLFW_PRESS)
-    queso::camPos[1] -= camSpeed;
-  if (key == GLFW_KEY_W && action == GLFW_PRESS)
-    queso::camPos[2] -= camSpeed;
-  if (key == GLFW_KEY_S && action == GLFW_PRESS)
-    queso::camPos[2] += camSpeed;
+  bool moveCamera = action == GLFW_PRESS || action == GLFW_REPEAT;
+  static double previousTime = glfwGetTime();
+  double currTime = glfwGetTime();
+  double elapsedTime = currTime - previousTime;
 
-  if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-    queso::camYaw += camRotSpeed;
-  if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
-    queso::camYaw -= camRotSpeed;
+  static bool cameraMoved = false;
+  if (key == GLFW_KEY_A && moveCamera) {
+    queso::camPos[0] -= camSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_D && moveCamera) {
+    queso::camPos[0] += camSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_PAGE_UP && moveCamera) {
+    queso::camPos[1] += camSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_PAGE_DOWN && moveCamera) {
+    queso::camPos[1] -= camSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_W && moveCamera) {
+    queso::camPos[2] -= camSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_S && moveCamera) {
+    queso::camPos[2] += camSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_LEFT && moveCamera) {
+    queso::camYaw += camRotSpeed * elapsedTime; cameraMoved = true;
+  }
+  if (key == GLFW_KEY_RIGHT && moveCamera) {
+    queso::camYaw -= camRotSpeed * elapsedTime; cameraMoved = true;
+  }
+
+  if (cameraMoved && action == GLFW_RELEASE) {
+    previousTime = currTime;
+    cameraMoved = false;
+  }
 }
+
 
