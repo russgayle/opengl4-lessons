@@ -15,7 +15,12 @@
 #include <GL/glew.h>
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
+
+// glm
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>   // translate, rotate, scale
+#include <glm/gtc/type_ptr.hpp>           // value_ptr
 
 // Let apps use queso's globals
 namespace queso {

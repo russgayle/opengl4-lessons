@@ -71,6 +71,10 @@ void queso::App::init(int argc, char* argv[]) {
 
 void queso::App::run() {
 
+  // UGLY.
+  // Projection
+  glm::mat4 proj = glm::perspective(3.1415192f / 3.0f, (float) m_width / (float) m_height, 0.1f, 1000.0f);
+
   while(!glfwWindowShouldClose(m_window)) {
 
     // Update title with FPS, if desired
@@ -95,8 +99,18 @@ void queso::App::run() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, m_width, m_height);
 
+    // Update our view
+    glm::mat4 translate = glm::translate(
+      glm::mat4(1.0f), glm::vec3(-queso::camPos[0], -queso::camPos[1], -queso::camPos[2]));
+    glm::mat4 view = glm::rotate(translate, queso::camYaw, glm::vec3(0.0f, 1.0f, 0.0f));
+
     // Finally draw everything
     for(size_t i = 0; i < m_drawables.size(); i++) {
+
+      // Ew. Perhaps we make all vertex shaders accept these?
+      m_programs[i]->setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(view));
+      m_programs[i]->setUniform("proj", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(proj));
+
       m_programs[i]->use();
       m_drawables[i]->draw();
     }

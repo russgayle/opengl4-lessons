@@ -37,18 +37,6 @@ int main(int argc, char* argv[]) {
   queso::Shader vs("shaders/perspective.vert", queso::VERTEX, true);
   queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
   queso::ShaderProgram prog(vs, fs);
-
-  // Projection
-  glm::mat4 projection = glm::perspective(3.141592f / 3.0f, 640.0f / 480.0f, 0.1f, 100.0f);
-
-  // View
-  glm::mat4 translate = glm::translate(
-    glm::mat4(1.0f), glm::vec3(-queso::camPos[0], -queso::camPos[1], -queso::camPos[2]));
-  glm::mat4 view = glm::rotate(translate, queso::camYaw, glm::vec3(0.0f, 1.0f, 0.0f));
-
-  // Set uniforms
-  prog.setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(view));
-  prog.setUniform("proj", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(projection));
    
   lesson6.addDrawable(&triangle);
   lesson6.addShaderProgram(&prog);
