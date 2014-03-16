@@ -16,3 +16,6 @@ add_subdirectory(lesson3)
 add_subdirectory(lesson4)
 add_subdirectory(lesson5)
 add_subdirectory(lesson6)
+
+# More adhoc explorations
+add_subdirectory(lighting)

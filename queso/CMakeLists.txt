@@ -81,8 +81,11 @@ add_library(queso
 
 target_link_libraries(queso ${QUESO_DEPS})
 
+file(GLOB shaders "${CMAKE_CURRENT_SOURCE_DIR}/shaders/*")
+install(FILES ${shaders} DESTINATION shaders)
+
 install(TARGETS queso
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION ${CMAKE_BINARY_DIR}
+  LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
+  ARCHIVE DESTINATION ${CMAKE_BINARY_DIR}
 )
