@@ -33,6 +33,12 @@ namespace queso {
   extern float camYaw;
   extern float camSpeed;
   extern float camRotSpeed;
+
+  // Lighting settings (single, point-light)
+  extern float lightPos[];
+  extern float specularColor[];
+  extern float diffuseColor[];
+  extern float ambientColor[];
 }
 
 #endif // _QUESO_COMMON_H_

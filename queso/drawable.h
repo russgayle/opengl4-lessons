@@ -38,10 +38,12 @@ namespace queso {
 
       void addVertices(size_t nItems, float* items);
       void addColors(size_t nItems, float* items);
+      void addNormals(size_t nItems, float* items);
   
     private:
       VBO m_vertices;
       VBO m_colors;
+      VBO m_normals;
 
       GLuint m_handle;
       size_t m_numPrims;

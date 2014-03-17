@@ -8,5 +8,9 @@ namespace queso {
   float camYaw = 0.0f;
   float camSpeed = 0.05f;
   float camRotSpeed = 3.1415192 / 90.0;
-  bool camUpdated = true;
+
+  float lightPos[] = { 10.0f, 10.0f, 10.0f };
+  float specularColor[] = { 1.0f, 1.0f, 1.0f };
+  float diffuseColor[] = { 0.7f, 0.7f, 0.7f };
+  float ambientColor[] = { 0.2f, 0.2f, 0.2f };
 }

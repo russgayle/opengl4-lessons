@@ -26,9 +26,16 @@ int main(int argc, char* argv[]) {
   };
   triangle.addColors(9, colors);
 
+  float normals[] = {
+    0.0f, 0.0f, 1.0f, 
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f
+  };
+  triangle.addNormals(9, normals);
+
   // Shaders and shader program
-  queso::Shader vs("shaders/perspective.vert", queso::VERTEX, true);
-  queso::Shader fs("shaders/uniform_color.frag", queso::FRAGMENT, true);
+  queso::Shader vs("shaders/view_and_normals.vert", queso::VERTEX, true);
+  queso::Shader fs("shaders/phongblinn.frag", queso::FRAGMENT, true);
   queso::ShaderProgram prog(vs, fs);
    
   phongToy.addDrawable(&triangle);

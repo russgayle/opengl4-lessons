@@ -34,3 +34,13 @@ void queso::Drawable::addColors(size_t nItems, float* items) {
   glEnableVertexAttribArray(1);
 }
 
+void queso::Drawable::addNormals(size_t nItems, float* items) {
+  bind();
+  m_normals.set(nItems, items);
+  m_numPrims = nItems / 3;
+
+  m_normals.bind();
+  glVertexAttribPointer(2, m_numPrims, GL_FLOAT, GL_FALSE, 0, NULL);
+  glEnableVertexAttribArray(2);
+}
+
