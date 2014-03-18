@@ -75,6 +75,10 @@ void queso::App::run() {
   // Projection
   glm::mat4 proj = glm::perspective(3.1415192f / 3.0f, (float) m_width / (float) m_height, 0.1f, 1000.0f);
 
+  // UGLY. 
+  // Model
+  glm::mat4 model = glm::mat4(1.0); 
+
   while(!glfwWindowShouldClose(m_window)) {
 
     // Update title with FPS, if desired
@@ -110,6 +114,7 @@ void queso::App::run() {
       // Ew. Perhaps we make all vertex shaders accept these?
       m_programs[i]->setUniform("view", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(view));
       m_programs[i]->setUniform("proj", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(proj));
+      m_programs[i]->setUniform("model", queso::FOUR_BY_FOUR, GL_FALSE, glm::value_ptr(model));
 
       m_programs[i]->use();
       m_drawables[i]->draw();
