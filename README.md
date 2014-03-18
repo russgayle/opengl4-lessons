@@ -10,6 +10,10 @@ Exercises with OpenGL 4 (on Mac and Ubuntu 12.04LTS)
 * Lesson 5: Basic transforms
 * Lesson 6: Virtual camera
 
+Moving on in a random order now. 
+
+* March 17, 2014: Added a simple phong-blinn shader.
+
 See http://antongerdelan.net/opengl/ for details.
 
 My long ways away to do...
