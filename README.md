@@ -1,6 +1,10 @@
 opengl4-lessons
 ===============
 
+**Note**
+--------
+This project is being discontinued. Instead, I'm migrating most of the relevant library parts to another project to build that up. I'm keeping this around just for reference at this point in time. Thanks! 
+
 Exercises with OpenGL 4 (on Mac and Ubuntu 12.04LTS)
 
 * Lesson 1: Simple program with setup.
